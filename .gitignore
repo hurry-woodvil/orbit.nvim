@@ -1,6 +1,22 @@
 # Compiled Lua sources
 luac.out
 
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
 # luarocks build files
 *.src.rock
 *.zip
@@ -38,4 +54,3 @@ luac.out
 *.i*86
 *.x86_64
 *.hex
-
