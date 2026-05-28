@@ -29,6 +29,21 @@ body:
       required: true
 
   - type: textarea
+    id: depends-on
+    attributes:
+      label: Depends On
+      description: この Task を開始する前提となる Issue を記載する。依存がない場合は「なし」と記載する
+      placeholder: |
+        - #10
+        - #12
+
+        依存がない場合:
+
+        なし
+    validations:
+      required: true
+
+  - type: textarea
     id: purpose
     attributes:
       label: Purpose
