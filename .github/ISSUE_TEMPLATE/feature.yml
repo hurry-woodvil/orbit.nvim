@@ -1,0 +1,118 @@
+name: Feature Issue
+description: ユーザー価値を提供する Feature Issue
+title: "[Feature] "
+labels:
+  - type: feature
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 概要
+
+        ユーザー価値を提供する Feature を定義する。
+
+        実装内容だけではなく、
+        「誰に」「何を」「なぜ提供するのか」を明確にすること。
+
+        また、
+        「コードが存在する」ではなく、
+        「動作する software が提供できる」ことを完了条件とする。
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: 誰が、何を、なぜ必要としているのかを書く
+      placeholder: |
+        ### 誰が
+
+        Neovim ユーザー
+
+        ### 何を
+
+        Neovim 上から Codex を起動できるようになりたい
+
+        ### なぜ
+
+        エディタを離れずに AI workflow を継続したいから
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: この Feature が必要な理由を書く
+      placeholder: |
+        - 
+        - 
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: 今回やることを書く
+      placeholder: |
+        - 
+        - 
+    validations:
+      required: true
+
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      description: 今回やらないことを書く
+      placeholder: |
+        - 
+        - 
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: 完了条件を書く
+      placeholder: |
+        - [ ]
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+
+  - type: textarea
+    id: test-story
+    attributes:
+      label: Test Story
+      description: どのように動作確認するかを書く
+      placeholder: |
+        ## Setup
+
+        - 
+        - 
+
+        ## Steps
+
+        1.
+        2.
+        3.
+
+        ## Expected Result
+
+        - 
+        - 
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: 補足事項があれば記載する
+      placeholder: |
+        - 
+        -
