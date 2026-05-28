@@ -177,6 +177,22 @@ Issue 番号の記載は不要。
 - Out of Scope を明確にする
 - 手動確認方法を記載する
 
+## Pull Request Template
+
+Pull Request を作成する場合は、
+`.github/pull_request_template.md`
+を参照すること。
+
+PR description は template に従って記載すること。
+
+特に以下を明確にすること。
+
+- Why
+- Scope
+- Out of Scope
+- Test
+- Related Issues
+
 ---
 
 # Issue Guidelines
