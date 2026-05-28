@@ -96,6 +96,25 @@ terminal-native な AI workflow を重視する。
 - 既存挙動を壊さない
 - 動作確認可能な状態を維持する
 
+## 既存状態の確認
+
+AI は、
+install・設定変更・file 生成を行う前に、
+既存状態を確認すること。
+
+例:
+
+- command が存在するか
+- formatter が install 済みか
+- file が存在するか
+- plugin が読み込み済みか
+- 同等機能が既に存在しないか
+
+不要な install・重複実装・設定競合を避けること。
+
+既存状態が不明な場合は、
+確認手順を Task の Test Story または Notes に記載すること。
+
 ---
 
 # Repository Structure
