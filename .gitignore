@@ -17,6 +17,9 @@ Thumbs.db
 tmp/
 temp/
 
+# Local Codex session notes
+.codex/sessions/
+
 # luarocks build files
 *.src.rock
 *.zip
