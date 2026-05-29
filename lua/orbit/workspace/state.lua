@@ -20,4 +20,12 @@ function M.set_job_id(job_id)
   state.job_id = job_id
 end
 
+function M.workspace_exists()
+  return state.win_id ~= nil and vim.api.nvim_win_is_valid(state.win_id)
+end
+
+function M.get_win_id()
+  return state.win_id
+end
+
 return M

@@ -4,7 +4,15 @@ local M = {}
 -- 詳細な orchestration は後続 Task Issue で実装する。
 
 function M.start()
-  require("orbit.workspace.layout").create()
+  local state = require("orbit.workspace.state")
+  local layout = require("orbit.workspace.layout")
+
+  if state.workspace_exists() then
+    layout.focus(state.get_win_id())
+    return
+  end
+
+  layout.create()
   require("orbit.workspace.terminal").create()
   require("orbit.workspace.process").start()
 end
