@@ -3,3 +3,5 @@ if vim.g.loaded_orbit == 1 then
 end
 
 vim.g.loaded_orbit = 1
+
+require("orbit").setup()
