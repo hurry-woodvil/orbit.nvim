@@ -16,4 +16,8 @@ function M.set_bufnr(bufnr)
   state.bufnr = bufnr
 end
 
+function M.set_job_id(job_id)
+  state.job_id = job_id
+end
+
 return M
