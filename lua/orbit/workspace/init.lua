@@ -17,4 +17,8 @@ function M.start()
   require("orbit.workspace.process").start()
 end
 
+function M.release()
+  vim.notify("OrbitRelease はまだ placeholder です", vim.log.levels.INFO)
+end
+
 return M
