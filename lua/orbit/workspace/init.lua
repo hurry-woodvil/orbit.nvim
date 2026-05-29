@@ -5,6 +5,7 @@ local M = {}
 
 function M.start()
   require("orbit.workspace.layout").create()
+  require("orbit.workspace.terminal").create()
 end
 
 return M
