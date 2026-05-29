@@ -4,7 +4,7 @@ local M = {}
 -- 詳細な orchestration は後続 Task Issue で実装する。
 
 function M.start()
-  vim.notify("OrbitStart はまだ placeholder です", vim.log.levels.INFO)
+  require("orbit.workspace.layout").create()
 end
 
 return M

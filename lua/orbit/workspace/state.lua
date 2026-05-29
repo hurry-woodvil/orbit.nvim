@@ -8,4 +8,8 @@ local state = {
   job_id = nil,
 }
 
+function M.set_win_id(win_id)
+  state.win_id = win_id
+end
+
 return M

@@ -1,6 +1,12 @@
 local M = {}
 
 -- Codex workspace 用 split layout の作成・終了を担当する。
--- 詳細な layout 処理は後続 Task Issue で実装する。
+
+function M.create()
+  vim.cmd("topleft vertical new")
+
+  local win_id = vim.api.nvim_get_current_win()
+  require("orbit.workspace.state").set_win_id(win_id)
+end
 
 return M
