@@ -14,4 +14,10 @@ function M.start()
   vim.cmd("startinsert")
 end
 
+function M.stop(job_id)
+  if job_id ~= nil then
+    vim.fn.jobstop(job_id)
+  end
+end
+
 return M

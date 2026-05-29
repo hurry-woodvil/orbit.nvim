@@ -18,7 +18,13 @@ function M.start()
 end
 
 function M.release()
-  vim.notify("OrbitRelease はまだ placeholder です", vim.log.levels.INFO)
+  local state = require("orbit.workspace.state")
+
+  require("orbit.workspace.process").stop(state.get_job_id())
+  require("orbit.workspace.layout").close(state.get_win_id())
+  require("orbit.workspace.terminal").delete(state.get_bufnr())
+
+  state.reset()
 end
 
 return M

@@ -11,4 +11,10 @@ function M.create()
   require("orbit.workspace.state").set_bufnr(bufnr)
 end
 
+function M.delete(bufnr)
+  if bufnr ~= nil and vim.api.nvim_buf_is_valid(bufnr) then
+    vim.api.nvim_buf_delete(bufnr, { force = true })
+  end
+end
+
 return M

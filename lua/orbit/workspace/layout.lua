@@ -15,4 +15,10 @@ function M.focus(win_id)
   end
 end
 
+function M.close(win_id)
+  if win_id ~= nil and vim.api.nvim_win_is_valid(win_id) then
+    vim.api.nvim_win_close(win_id, true)
+  end
+end
+
 return M

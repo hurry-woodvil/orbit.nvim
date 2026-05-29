@@ -28,4 +28,18 @@ function M.get_win_id()
   return state.win_id
 end
 
+function M.get_bufnr()
+  return state.bufnr
+end
+
+function M.get_job_id()
+  return state.job_id
+end
+
+function M.reset()
+  state.win_id = nil
+  state.bufnr = nil
+  state.job_id = nil
+end
+
 return M
