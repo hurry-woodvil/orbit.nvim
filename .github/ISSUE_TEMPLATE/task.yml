@@ -44,6 +44,22 @@ body:
       required: true
 
   - type: textarea
+    id: start-condition
+    attributes:
+      label: Start Condition
+      description: この Task を開始してよい前提条件を書く。依存がない場合は「なし」と記載する
+      placeholder: |
+        - #10 が完了している
+        - module boundary が定義済みである
+        - 依存する command が存在している
+
+        依存がない場合:
+
+        なし
+    validations:
+      required: true
+
+  - type: textarea
     id: purpose
     attributes:
       label: Purpose
@@ -89,6 +105,34 @@ body:
       required: true
 
   - type: textarea
+    id: implementation-policy
+    attributes:
+      label: Implementation Policy
+      description: 実装時に守る方針、許可すること、禁止することを書く
+      placeholder: |
+        ## 許可すること
+
+        - 
+        - 
+
+        ## 禁止すること
+
+        - 後続 Task の実装を先取りしない
+        - 過剰 abstraction を導入しない
+
+        ## 必要に応じて記載すること
+
+        ### Placeholder Policy
+
+        - 
+
+        ### Skeleton Policy
+
+        - 
+    validations:
+      required: true
+
+  - type: textarea
     id: implementation-notes
     attributes:
       label: Implementation Notes
@@ -121,10 +165,20 @@ body:
       required: true
 
   - type: textarea
+    id: handoff
+    attributes:
+      label: Handoff
+      description: 後続 Task に引き継ぐことを書く
+      placeholder: |
+        - この Task では entrypoint のみ作成する
+        - 実処理は #12 で実装する
+        - 未対応事項は backlog として残す
+
+  - type: textarea
     id: notes
     attributes:
       label: Notes
       description: 補足事項があれば記載する
       placeholder: |
         - 
-        -
+        - 
