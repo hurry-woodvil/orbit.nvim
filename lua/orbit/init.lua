@@ -1,7 +1,9 @@
 local M = {}
 
 ---orbit.nvim の初期化を行う。
-function M.setup()
+---@param opts OrbitConfig|nil
+function M.setup(opts)
+  require("orbit.config").setup(opts)
   require("orbit.commands").setup()
 end
 
