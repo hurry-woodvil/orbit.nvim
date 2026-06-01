@@ -10,21 +10,17 @@ body:
       value: |
         ## 概要
 
-        Task Issue は、
-        Feature Issue を実現するための実装単位を定義する。
+        Task Issue は Feature を実現するための実装単位を定義する。
 
-        Task は、
-        AI が単独で実装・確認可能な粒度に分割すること。
+        AI が単独で実装・確認できる粒度まで具体化すること。
 
-        また、
-        Feature Issue の目的から逸脱しないこと。
+        曖昧な表現（整理する、対応する、改善する）は避けること。
 
   - type: input
     id: related-feature
     attributes:
       label: Related Feature
-      description: 関連する Feature Issue を記載する
-      placeholder: "#10"
+      placeholder: "#28"
     validations:
       required: true
 
@@ -32,30 +28,9 @@ body:
     id: depends-on
     attributes:
       label: Depends On
-      description: この Task を開始する前提となる Issue を記載する。依存がない場合は「なし」と記載する
       placeholder: |
-        - #10
-        - #12
-
-        依存がない場合:
-
-        なし
-    validations:
-      required: true
-
-  - type: textarea
-    id: start-condition
-    attributes:
-      label: Start Condition
-      description: この Task を開始してよい前提条件を書く。依存がない場合は「なし」と記載する
-      placeholder: |
-        - #10 が完了している
-        - module boundary が定義済みである
-        - 依存する command が存在している
-
-        依存がない場合:
-
-        なし
+        - #29
+        - #30
     validations:
       required: true
 
@@ -63,9 +38,43 @@ body:
     id: purpose
     attributes:
       label: Purpose
-      description: この Task の目的を書く
       placeholder: |
-        terminal buffer を生成できるようにする
+        config.get() を利用できるようにする
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation-target
+    attributes:
+      label: Implementation Target
+      description: 変更対象の file / module を明記する
+      placeholder: |
+        lua/orbit/config/init.lua
+        lua/orbit/config/defaults.lua
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-definition
+    attributes:
+      label: API Definition
+      description: 作成・変更する API を具体的に定義する
+      placeholder: |
+        function M.get()
+          return vim.deepcopy(current)
+        end
+    validations:
+      required: true
+
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Behavior
+      description: 実装後の期待動作を書く
+      placeholder: |
+        - config.get() が利用できる
+        - deep copy を返す
+        - default table を汚染しない
     validations:
       required: true
 
@@ -73,11 +82,9 @@ body:
     id: scope
     attributes:
       label: Scope
-      description: 今回実装する内容を書く
       placeholder: |
-        - terminal buffer 作成
-        - buffer 設定
-        - window 表示
+        - config.get() を実装する
+        - module export を追加する
     validations:
       required: true
 
@@ -85,10 +92,10 @@ body:
     id: out-of-scope
     attributes:
       label: Out of Scope
-      description: 今回やらないことを書く
       placeholder: |
-        - Codex process 起動
-        - session resume
+        - setup(opts)
+        - validation
+        - terminal workflow への反映
     validations:
       required: true
 
@@ -96,11 +103,10 @@ body:
     id: acceptance-criteria
     attributes:
       label: Acceptance Criteria
-      description: 完了条件を書く
       placeholder: |
-        - [ ] terminal buffer を生成できる
-        - [ ] Neovim 上で表示できる
-        - [ ] 既存 buffer に影響しない
+        - [ ] config.get() が利用できる
+        - [ ] deep copy を返す
+        - [ ] default table を汚染しない
     validations:
       required: true
 
@@ -108,27 +114,30 @@ body:
     id: implementation-policy
     attributes:
       label: Implementation Policy
-      description: 実装時に守る方針、許可すること、禁止することを書く
       placeholder: |
         ## 許可すること
-
-        - 
-        - 
+        - 最小実装
 
         ## 禁止すること
+        - 後続 Task の先取り
+        - 大規模リファクタ
+        - 未定義 API の追加
+    validations:
+      required: true
 
-        - 後続 Task の実装を先取りしない
-        - 過剰 abstraction を導入しない
+  - type: textarea
+    id: test-story
+    attributes:
+      label: Test Story
+      placeholder: |
+        ## Setup
+        - Neovim を起動する
 
-        ## 必要に応じて記載すること
+        ## Steps
+        1. :lua print(require("orbit.config").get())
 
-        ### Placeholder Policy
-
-        - 
-
-        ### Skeleton Policy
-
-        - 
+        ## Expected Result
+        - error が発生しない
     validations:
       required: true
 
@@ -136,49 +145,21 @@ body:
     id: implementation-notes
     attributes:
       label: Implementation Notes
-      description: 実装上の注意点を書く
       placeholder: |
-        - terminal.nvim を利用しない
-        - vim.fn.termopen を利用する
-        - 過剰 abstraction を避ける
-
-  - type: textarea
-    id: test-story
-    attributes:
-      label: Test Story
-      description: 動作確認方法を書く
-      placeholder: |
-        ## Setup
-
-        - Neovim を起動する
-
-        ## Steps
-
-        1. :OrbitStart を実行する
-        2. terminal buffer が開くことを確認する
-
-        ## Expected Result
-
-        - terminal buffer が表示される
-        - Neovim がエラーにならない
-    validations:
-      required: true
+        - #34 の実装を置き換える
+        - defaults table を直接返さない
 
   - type: textarea
     id: handoff
     attributes:
       label: Handoff
-      description: 後続 Task に引き継ぐことを書く
       placeholder: |
-        - この Task では entrypoint のみ作成する
-        - 実処理は #12 で実装する
-        - 未対応事項は backlog として残す
+        - 実処理は #33 で実装する
+        - validation は別 Issue で扱う
 
   - type: textarea
     id: notes
     attributes:
       label: Notes
-      description: 補足事項があれば記載する
       placeholder: |
-        - 
-        - 
+        - 補足事項
