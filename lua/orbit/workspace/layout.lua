@@ -2,9 +2,17 @@ local M = {}
 
 -- Codex workspace 用 split layout の作成・終了を担当する。
 
+local split_commands = {
+  left = "topleft vertical new",
+  right = "botright vertical new",
+  top = "topleft new",
+  bottom = "botright new",
+}
+
 ---@return integer win_id Created Codex workspace window id.
 function M.create()
-  vim.cmd("topleft vertical new")
+  local config = require("orbit.config").get()
+  vim.cmd(split_commands[config.workspace.position])
 
   return vim.api.nvim_get_current_win()
 end
