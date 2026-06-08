@@ -73,13 +73,15 @@ end
 function M.send_selection(opts)
   opts = opts or {}
 
-  local context_text, context_err =
-    require("orbit.context.selection").build(opts.bufnr or vim.api.nvim_get_current_buf(), opts)
+  local selection_context = require("orbit.context.selection")
+  local selection, selection_err =
+    selection_context.get_selection(opts.bufnr or vim.api.nvim_get_current_buf(), opts)
 
-  if context_text == nil then
-    return false, context_err
+  if selection == nil then
+    return false, selection_err
   end
 
+  local context_text = selection_context.build(selection)
   local job_id = require("orbit.workspace.state").get_job_id()
   local ok, send_err = require("orbit.workspace.process").send(job_id, context_text)
 

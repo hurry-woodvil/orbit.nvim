@@ -26,11 +26,19 @@ local function normalize_range(line1, line2)
   return line1, line2
 end
 
+local function normalize_mode(mode)
+  if mode == "V" then
+    return "line"
+  end
+
+  return "char"
+end
+
 ---@param bufnr integer|nil
 ---@param opts { line1: integer|nil, line2: integer|nil, mode: string|nil, range: integer|nil }|nil
----@return string|nil context_text
+---@return table|nil selection
 ---@return string|nil err
-function M.build(bufnr, opts)
+function M.get_selection(bufnr, opts)
   opts = opts or {}
 
   if opts.range ~= 2 or opts.line1 == nil or opts.line2 == nil then
@@ -50,22 +58,34 @@ function M.build(bufnr, opts)
   end
 
   local start_line, end_line = normalize_range(opts.line1, opts.line2)
-  local name = get_buffer_name(bufnr)
-  local filetype = get_filetype(bufnr)
   local content = table.concat(vim.api.nvim_buf_get_lines(bufnr, start_line - 1, end_line, false), "\n")
 
+  return {
+    bufnr = bufnr,
+    mode = normalize_mode(opts.mode),
+    start_line = start_line,
+    end_line = end_line,
+    name = get_buffer_name(bufnr),
+    filetype = get_filetype(bufnr),
+    content = content,
+  },
+    nil
+end
+
+---@param selection { name: string, filetype: string, start_line: integer, end_line: integer, content: string }
+---@return string context_text
+function M.build(selection)
   return table.concat({
     "# Selection Context",
     "",
-    "Name: " .. name,
-    "Filetype: " .. filetype,
-    "Range: L" .. start_line .. "-L" .. end_line,
+    "Name: " .. selection.name,
+    "Filetype: " .. selection.filetype,
+    "Range: L" .. selection.start_line .. "-L" .. selection.end_line,
     "",
-    "```" .. filetype,
-    content,
+    "```" .. selection.filetype,
+    selection.content,
     "```",
-  }, "\n"),
-    nil
+  }, "\n")
 end
 
 return M
