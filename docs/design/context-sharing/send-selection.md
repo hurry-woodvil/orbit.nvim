@@ -1,4 +1,4 @@
-# SendSelection Desgign
+# SendSelection Design
 
 ## Overview
 
@@ -18,7 +18,7 @@ AI agent に相談できる。
 
 - 対象は通常の file buffer 上の visual selection とする
 - 選択範囲の content を送信対象とする
-- file path が存在しない場合は buffer name または `[No name]` として扱う
+- file path が存在しない場合は buffer name または `[No Name]` として扱う
 - selection range を context に含める
 - terminal buffer、help buffer、quickfix buffer などの特殊 buffer は対象外とする
 - workspace が未起動の場合は error notify を表示し、送信しない
@@ -29,7 +29,7 @@ SendSelection は visual mode で選択されている範囲を即時取得し�
 
 選択範囲は workspace state に保持しない。
 
-他 buffer へ移動した後の visula selection は送信対象としない。
+他 buffer へ移動した後の visual selection は送信対象としない。
 
 ユーザーは file buffer 上で visual selection を行った状態で
 `:OrbitSendSelection` を実行することを前提とする。
