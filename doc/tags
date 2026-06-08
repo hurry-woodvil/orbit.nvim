@@ -1,0 +1,12 @@
+:OrbitRelease	orbit.txt	/*:OrbitRelease*
+:OrbitSendBuffer	orbit.txt	/*:OrbitSendBuffer*
+:OrbitSendSelection	orbit.txt	/*:OrbitSendSelection*
+:OrbitStart	orbit.txt	/*:OrbitStart*
+orbit-commands	orbit.txt	/*orbit-commands*
+orbit-configuration	orbit.txt	/*orbit-configuration*
+orbit-contents	orbit.txt	/*orbit-contents*
+orbit-installation	orbit.txt	/*orbit-installation*
+orbit-introduction	orbit.txt	/*orbit-introduction*
+orbit-requirements	orbit.txt	/*orbit-requirements*
+orbit-roadmap	orbit.txt	/*orbit-roadmap*
+orbit.txt	orbit.txt	/*orbit.txt*
