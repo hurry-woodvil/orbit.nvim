@@ -14,6 +14,10 @@ function M.setup()
   vim.api.nvim_create_user_command("OrbitRelease", function()
     require("orbit.workspace").release()
   end, { force = true })
+
+  vim.api.nvim_create_user_command("OrbitSendBuffer", function()
+    require("orbit.workspace").send_buffer()
+  end, { force = true })
 end
 
 return M

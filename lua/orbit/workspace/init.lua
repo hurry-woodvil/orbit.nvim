@@ -45,4 +45,22 @@ function M.release()
   state.reset()
 end
 
+---last active file buffer の context を Codex workspace に送信する。
+function M.send_buffer()
+  local state = require("orbit.workspace.state")
+  local context_text, context_err =
+    require("orbit.context.buffer").build(state.get_last_active_file_bufnr())
+
+  if context_text == nil then
+    vim.notify(context_err, vim.log.levels.ERROR)
+    return
+  end
+
+  local ok, send_err = require("orbit.workspace.process").send(state.get_job_id(), context_text)
+
+  if not ok then
+    vim.notify(send_err, vim.log.levels.ERROR)
+  end
+end
+
 return M
