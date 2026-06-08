@@ -31,4 +31,22 @@ function M.stop(job_id)
   end
 end
 
+---@param job_id integer|nil Codex terminal job/channel id.
+---@param text string Text to send to the Codex terminal.
+---@return boolean ok
+---@return string|nil err
+function M.send(job_id, text)
+  if job_id == nil then
+    return false, "Codex workspace が起動していません"
+  end
+
+  local ok, sent = pcall(vim.fn.chansend, job_id, text .. "\n")
+
+  if not ok or sent <= 0 then
+    return false, "Codex workspace に送信できませんでした"
+  end
+
+  return true, nil
+end
+
 return M
