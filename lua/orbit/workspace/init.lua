@@ -7,6 +7,8 @@ local M = {}
 function M.start()
   local state = require("orbit.workspace.state")
   local layout = require("orbit.workspace.layout")
+  state.track_current_buffer()
+  local last_active_file_bufnr = state.get_last_active_file_bufnr()
 
   if state.workspace_exists() then
     layout.focus(state.get_win_id())
@@ -21,6 +23,7 @@ function M.start()
 
   local bufnr = terminal.create()
   state.set_bufnr(bufnr)
+  state.set_last_active_file_bufnr(last_active_file_bufnr)
 
   local job_id, err = process.start()
   if job_id == nil then
