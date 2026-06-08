@@ -20,7 +20,7 @@
 - 未保存 buffer でも現在の buffer 内容を送信対象とする
 - file path が存在しない場合は、buffer name または `[No Name]` として扱う
 - terminal buffer、help buffer、quickfix buffer などの特殊 buffer は今回の対象外とする
-- workspace が起動していない場合の扱いは、task issue 側で定義する
+- workspace が起動していない場合は error notify を表示し、送信しない
 
 ## Buffer Selection
 
@@ -44,18 +44,32 @@
 
 AI agent が対象ファイルを識別し、内容を理解できる形式で送信する。
 
-送信フォーマットの詳細は実装時に定義する。
+現在の実装では以下の text format を利用する。
+
+````txt
+# Buffer Context
+
+Name: path/to/file.lua
+Filetype: lua
+
+```lua
+buffer content
+```
+````
+
+file path または buffer name が存在しない場合は、
+`[No Name]` を `Name` として利用する。
+
+空 buffer は error にせず、
+metadata と空 content を含む context として送信する。
 
 ## Error Case
 
-以下のケースを考慮する。
+以下のケースは error notify を表示し、送信しない。
 
 - 送信対象 buffer が存在しない
-- 空buffer
 - file buffer以外が選択された
 - orbit workspace が未起動
-
-各ケースの具体的なエラーハンドリングは task issue 側で定義する。
 
 ## Dependencies
 
@@ -85,4 +99,3 @@ last active file buffer を利用する。
 - current buffer の内容が Codex に送信される
 - Codex が送信された内容を読み取れる
 - Neovim が error を出さない
-

@@ -88,7 +88,10 @@ T["send_buffer sends context for last active file buffer"] = function()
     sent = { job_id = job_id, text = text }
     return true, nil
   end, function()
-    workspace.send_buffer()
+    local ok, err = workspace.send_buffer()
+
+    MiniTest.expect.equality(ok, true)
+    MiniTest.expect.equality(err, nil)
   end)
 
   MiniTest.expect.equality(sent.job_id, 10)
@@ -102,24 +105,23 @@ T["send_buffer sends context for last active file buffer"] = function()
   delete_buffer(bufnr)
 end
 
-T["send_buffer notifies when target buffer is missing"] = function()
+T["send_buffer returns error when target buffer is missing"] = function()
   local sent = false
-  local calls = capture_notify(function()
-    with_process_send(function()
-      sent = true
-      return true, nil
-    end, function()
-      workspace.send_buffer()
-    end)
+  local ok, err
+
+  with_process_send(function()
+    sent = true
+    return true, nil
+  end, function()
+    ok, err = workspace.send_buffer()
   end)
 
   MiniTest.expect.equality(sent, false)
-  MiniTest.expect.equality(calls, {
-    { message = "送信対象 buffer が存在しません", level = vim.log.levels.ERROR },
-  })
+  MiniTest.expect.equality(ok, false)
+  MiniTest.expect.equality(err, "送信対象 buffer が存在しません")
 end
 
-T["send_buffer notifies when workspace is not running"] = function()
+T["send_buffer returns error when workspace is not running"] = function()
   local bufnr = create_buffer({
     filetype = "text",
     lines = { "memo" },
@@ -127,13 +129,10 @@ T["send_buffer notifies when workspace is not running"] = function()
 
   state.set_last_active_file_bufnr(bufnr)
 
-  local calls = capture_notify(function()
-    workspace.send_buffer()
-  end)
+  local ok, err = workspace.send_buffer()
 
-  MiniTest.expect.equality(calls, {
-    { message = "Codex workspace が起動していません", level = vim.log.levels.ERROR },
-  })
+  MiniTest.expect.equality(ok, false)
+  MiniTest.expect.equality(err, "Codex workspace が起動していません")
 
   delete_buffer(bufnr)
 end
@@ -161,6 +160,17 @@ T["OrbitSendBuffer command is registered and executable"] = function()
   MiniTest.expect.equality(sent.text:find("memo", 1, true) ~= nil, true)
 
   delete_buffer(bufnr)
+end
+
+T["OrbitSendBuffer command notifies when send fails"] = function()
+  local calls = capture_notify(function()
+    require("orbit").setup()
+    vim.cmd("OrbitSendBuffer")
+  end)
+
+  MiniTest.expect.equality(calls, {
+    { message = "Codex workspace が起動していません", level = vim.log.levels.ERROR },
+  })
 end
 
 return T
