@@ -22,6 +22,20 @@ function M.setup()
       vim.notify(err, vim.log.levels.ERROR)
     end
   end, { force = true })
+
+  vim.api.nvim_create_user_command("OrbitSendSelection", function(opts)
+    local ok, err = require("orbit.workspace").send_selection({
+      bufnr = vim.api.nvim_get_current_buf(),
+      line1 = opts.line1,
+      line2 = opts.line2,
+      mode = vim.fn.visualmode(),
+      range = opts.range,
+    })
+
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end, { force = true, range = true })
 end
 
 return M

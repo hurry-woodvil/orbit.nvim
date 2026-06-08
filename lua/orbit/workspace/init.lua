@@ -66,4 +66,30 @@ function M.send_buffer()
   return true, nil
 end
 
+---visual selection の context を Codex workspace に送信する。
+---@param opts { bufnr: integer|nil, line1: integer|nil, line2: integer|nil, mode: string|nil, range: integer|nil }|nil
+---@return boolean ok
+---@return string|nil err
+function M.send_selection(opts)
+  opts = opts or {}
+
+  local selection_context = require("orbit.context.selection")
+  local selection, selection_err =
+    selection_context.get_selection(opts.bufnr or vim.api.nvim_get_current_buf(), opts)
+
+  if selection == nil then
+    return false, selection_err
+  end
+
+  local context_text = selection_context.build(selection)
+  local job_id = require("orbit.workspace.state").get_job_id()
+  local ok, send_err = require("orbit.workspace.process").send(job_id, context_text)
+
+  if not ok then
+    return false, send_err
+  end
+
+  return true, nil
+end
+
 return M
