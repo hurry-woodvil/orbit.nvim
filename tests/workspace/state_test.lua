@@ -70,6 +70,41 @@ T["set_last_active_file_bufnr does not replace with special buffer"] = function(
   delete_buffer(special_bufnr)
 end
 
+T["set_last_active_file_bufnr does not replace with help or quickfix buffer"] = function()
+  local file_bufnr = create_buffer()
+  local help_bufnr = create_buffer({ buftype = "help" })
+  local quickfix_bufnr = create_buffer({ buftype = "quickfix" })
+
+  state.set_last_active_file_bufnr(file_bufnr)
+  state.set_last_active_file_bufnr(help_bufnr)
+  state.set_last_active_file_bufnr(quickfix_bufnr)
+
+  MiniTest.expect.equality(state.get_last_active_file_bufnr(), file_bufnr)
+
+  delete_buffer(file_bufnr)
+  delete_buffer(help_bufnr)
+  delete_buffer(quickfix_bufnr)
+end
+
+T["terminal buffer does not replace last active file buffer"] = function()
+  local file_bufnr = create_buffer()
+  local terminal_bufnr = create_buffer()
+  local original_bufnr = vim.api.nvim_get_current_buf()
+
+  state.set_last_active_file_bufnr(file_bufnr)
+  vim.api.nvim_set_current_buf(terminal_bufnr)
+
+  local job_id = vim.fn.termopen({ "sh", "-c", "cat" })
+  state.set_last_active_file_bufnr(terminal_bufnr)
+
+  MiniTest.expect.equality(state.get_last_active_file_bufnr(), file_bufnr)
+
+  vim.fn.jobstop(job_id)
+  vim.api.nvim_set_current_buf(original_bufnr)
+  delete_buffer(file_bufnr)
+  delete_buffer(terminal_bufnr)
+end
+
 T["get_last_active_file_bufnr clears invalid buffer"] = function()
   local bufnr = create_buffer()
 
