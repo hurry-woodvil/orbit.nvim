@@ -1,0 +1,119 @@
+
+*orbit.txt*                     orbit.nvim                     更新日: 2026-06-11
+
+==============================================================================
+目次                                                        *orbit-contents*
+
+1. orbit.nvimとは .................................... |orbit-introduction|
+2. 動作要件 .......................................... |orbit-requirements|
+3. インストール ...................................... |orbit-installation|
+4. コマンド .......................................... |orbit-commands|
+5. 設定 .............................................. |orbit-configuration|
+6. 今後の開発計画 .................................... |orbit-roadmap|
+
+==============================================================================
+
+1. orbit.nvimとは                                    *orbit-introduction*
+
+orbit.nvim は AI コーディングエージェントと協調しながら開発を行うための
+Neovim プラグインです。
+
+現在は Codex CLI を Terminal Buffer 上で利用するための Workspace を
+提供しています。
+
+将来的には以下の機能を提供することを目指しています。
+
+* Context Sharing
+* Session Management
+* Multi-Agent Collaboration
+* AGENTS.md Integration
+* AI Agent Workflow Integration
+
+==============================================================================
+2. 動作要件                                          *orbit-requirements*
+
+必要な環境:
+
+* Neovim >= 0.12.0
+* Codex CLI
+
+対応状況:
+
+Codex CLI      対応済み
+Claude Code    対応予定
+Gemini CLI     対応予定
+
+==============================================================================
+3. インストール                                      *orbit-installation*
+
+lazy.nvim を利用する場合:
+
+>
+
+{
+"hurry-woodvil/orbit.nvim",
+opts = {},
+}
+<
+
+==============================================================================
+4. コマンド                                          *orbit-commands*
+
+```
+                                                *:OrbitStart*
+```
+
+:OrbitStart
+AI エージェント Workspace を起動します。
+
+```
+                                              *:OrbitRelease*
+```
+
+:OrbitRelease
+AI エージェント Workspace を停止します。
+
+```
+                                           *:OrbitSendBuffer*
+```
+
+:OrbitSendBuffer
+現在編集中の Buffer を AI エージェントへ送信します。
+
+```
+                                        *:OrbitSendSelection*
+```
+
+:OrbitSendSelection
+Visual Mode で選択中の範囲を AI エージェントへ送信します。
+
+==============================================================================
+5. 設定                                         *orbit-configuration*
+
+基本設定:
+
+>
+
+require("orbit").setup({})
+<
+
+現在は追加設定項目はありません。
+
+今後のリリースで設定項目を追加予定です。
+
+==============================================================================
+6. 今後の開発計画                                  *orbit-roadmap*
+
+orbit.nvim は単なる Codex ラッパーではありません。
+
+将来的には以下の機能を実現したいと考えています。
+
+* Context Sharing
+
+  * AGENTS.md Support
+* Session Management
+* Multi-Agent Collaboration
+* AI Agent Workflow Integration
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
